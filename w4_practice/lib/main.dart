@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'ui/providers/theme_color_provider.dart';
-import 'ui/screens/settings/settings_screen.dart';
-import 'ui/screens/downloads/downloads_screen.dart';
-import 'ui/theme/theme.dart';
+import '2_download_app/ui/providers/theme_color_provider.dart';
+import '2_download_app/ui/screens/settings/settings_screen.dart';
+import '2_download_app/ui/screens/downloads/downloads_screen.dart';
+import '2_download_app/ui/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
