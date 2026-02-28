@@ -26,11 +26,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentIndex == 0
-          ? ColorTapsScreen(
-            )
-          : StatisticsScreen(
-            ),
+      body: _currentIndex == 0 ? ColorTapsScreen() : StatisticsScreen(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -54,10 +50,7 @@ class _HomeState extends State<Home> {
 }
 
 class ColorTapsScreen extends StatelessWidget {
-
-  const ColorTapsScreen({
-    super.key,
-  });
+  const ColorTapsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +58,7 @@ class ColorTapsScreen extends StatelessWidget {
       body: Column(
         children: [
           ColorTap(type: CardType.red),
-          ColorTap(
-            type: CardType.blue,
-          ),
+          ColorTap(type: CardType.blue),
         ],
       ),
     );
@@ -77,46 +68,44 @@ class ColorTapsScreen extends StatelessWidget {
 class ColorTap extends StatelessWidget {
   final CardType type;
 
-  const ColorTap({
-    super.key,
-    required this.type,
-  });
+  const ColorTap({super.key, required this.type});
 
   Color get backgroundColor => type == CardType.red ? Colors.red : Colors.blue;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-
-         type == CardType.red
+    return ListenableBuilder(
+      listenable: colorService,
+      builder: (_, child) {
+        return GestureDetector(
+          onTap: () {
+            type == CardType.red
                 ? colorService.incrementRedTapCount()
                 : colorService.incrementBlueTapCount();
-      },
-      child: Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        width: double.infinity,
-        height: 100,
-        child: Center(
-          child: Text(
-            'Taps: ${type == CardType.red ? colorService.redTapCount : colorService.blueTapCount}',
-            style: TextStyle(fontSize: 24, color: Colors.white),
+          },
+          child: Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
+            height: 100,
+            child: Center(
+              child: Text(
+                'Taps: ${type == CardType.red ? colorService.redTapCount : colorService.blueTapCount}',
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
 class StatisticsScreen extends StatelessWidget {
-
-  const StatisticsScreen({
-    super.key,
-  });
+  const StatisticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +115,14 @@ class StatisticsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Red Taps: ${colorService.redTapCount}', style: TextStyle(fontSize: 24)),
-            Text('Blue Taps: ${colorService.blueTapCount}', style: TextStyle(fontSize: 24)),
+            Text(
+              'Red Taps: ${colorService.redTapCount}',
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              'Blue Taps: ${colorService.blueTapCount}',
+              style: TextStyle(fontSize: 24),
+            ),
           ],
         ),
       ),
